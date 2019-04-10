@@ -1,37 +1,38 @@
-// 游戏数据映射到HTML
+// 操作 DOM，把游戏数据映射到HTML
 class HTMLActuator{
     constructor() {
         this.scoreContainer = document.querySelector('.score');
         this.bestContainer = document.querySelector('.best');        
         this.tileContainer = document.querySelector('.tile-container');
         this.messageContainer = document.querySelector('.message-container');
-
-        this.score = 0;
     }
 
-    // 主程，grid => 棋盘实例，  metadata => 其它信息(score、best、won、over)
+    // 主程序，grid => 棋盘实例，  metadata => 其它信息(score、best、won、over)
     actuate(grid, metadata) {
-        this.cleartContainer(this.tileContainer);
-
-        // 遍历棋盘内格子，若格子内含有方块，则渲染方块
-        gird.cells.forEach(row => {
-            row.forEach(cell => {
-                if (cell) {
-                    this.addTile(cell);
-                }
+        // 这里如果不用requestAnimationFrame方法，刷新页面后移动方块时 transition 动画失效
+        window.requestAnimationFrame(() => {
+            this.cleartContainer(this.tileContainer);
+        
+            // 遍历棋盘内格子，若格子内含有方块，则渲染方块
+            grid.cells.forEach(row => {
+                row.forEach(cell => {
+                    if (cell) {
+                        this.addTile(cell);
+                    }
+                });
             });
+        
+            // 更新分数
+            this.updateScore(metadata.score);
+            this.updateBest(metadata.best);
+        
+            // 游戏失败/成功，弹出信息
+            if (metadata.won) {
+                this.message(true);
+            } else if (metadata.over) {
+                this.message(false);
+            }
         });
-
-        // 更新分数
-        this.updateScore(metadata.score);
-        this.updateBest(metadata.best);
-
-        // 游戏失败/成功，弹出信息
-        if (metadata.won) {
-            this.message(true);
-        } else if (metadata.over) {
-            this.message(false);
-        }
     }
 
     // 清空容器内节点
@@ -85,19 +86,19 @@ class HTMLActuator{
 
     // 渲染分数
     updateScore(score) {
-        this.scoreContainer.innerText = score;
+        this.scoreContainer.children[1].innerText = score;
     }
 
     // 渲染最高分
     updateBest(best) {
-        this.bestContainer.innerText = best;
+        this.bestContainer.children[1].innerText = best;
     }
 
     // 游戏结束弹出提示信息
     message(isWon) {
         let text = isWon ? 'You win!' : 'Game over!'
 
-        this.messageContainer.querySelector('p').innerText = text;
+        this.messageContainer.children[0].innerText = text;
         this.messageContainer.style.display = 'block';
     }
 

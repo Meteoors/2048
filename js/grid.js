@@ -41,7 +41,7 @@ class Grid{
         })
     }
 
-    // 随机取出一个空格子,返回
+    // 随机取出一个空格子,返回 position ({x, y})
     randomAvailableCell() {
         let cells = this.availableCells();
 

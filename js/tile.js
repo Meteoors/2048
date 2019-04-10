@@ -6,11 +6,11 @@ class Tile{
         this.value = value || 2;   // 方块内的数字大小，默认为 2
 
         this.previousPosition = null;  // 初始位置
-        this.mergedForm = null;
+        this.mergedFrom = null;
     }
 
     // 存入初始位置
-    savedPosition() {
+    savePosition() {
         this.previousPosition = {
             x: this.x,
             y: this.y

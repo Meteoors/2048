@@ -1,3 +1,4 @@
+// 事件处理中心,在此绑定鼠标及键盘事件
 class InputManager{
     constructor() {
         this.events = {};
@@ -47,6 +48,7 @@ class InputManager{
 
         // 绑定按钮事件
         this.bindButtonPress('.replay', this.restart.bind(this));
+        this.bindButtonPress('.again', this.restart.bind(this));        
     }
 
     restart(event) {

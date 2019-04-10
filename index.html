@@ -50,9 +50,22 @@
         </div>
         <div class="tile-container"></div>
         <div class="message-container">
-            <p class="message">Game over!</p>
+            <p class="message"></p>
             <div class="again">Try Again</div>
         </div>
     </section>
+
+    <script src="js/tile.js"></script>
+    <script src="js/grid.js"></script>
+    <script src="js/html_actuator.js"></script>
+    <script src="js/input_manager.js"></script>
+    <script src="js/game_manager.js"></script>
+    <script>
+        window.onload = function() {
+            setTimeout(function() {
+                new GameManager(4, InputManager, HTMLActuator);
+            }, 500);
+        }
+    </script>
 </body>
 </html>
